@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:spacex_launches/home_screen.dart';
+import 'package:spacex_launches/providers/data_provider.dart';
 import 'package:spacex_launches/theme/theme.dart';
 
 void main() {
@@ -11,11 +13,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'SpaceX Launches',
-      theme: AppTheme.theme,
-      home: const HomeScreen(),
+    return ChangeNotifierProvider(
+      create: (_) => DataProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'SpaceX Launches',
+        theme: AppTheme.theme,
+        home: const HomeScreen(),
+      ),
     );
   }
 }
