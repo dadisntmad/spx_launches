@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spacex_launches/api_client/api_client.dart';
 import 'package:spacex_launches/models/models.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DataProvider extends ChangeNotifier {
   final _apiClient = ApiClient();
@@ -45,5 +46,15 @@ class DataProvider extends ChangeNotifier {
   void getDataOnIndexChanged(int index, String rocketName) {
     currentIndex = index;
     getLaunches(rocketName: rocketName);
+  }
+
+  void openRocketLaunchInBrowser(String link) async {
+    final url = Uri.parse(link);
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw Exception("Couldn't open the $url");
+    }
   }
 }

@@ -44,82 +44,87 @@ class _MissionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.read<DataProvider>().launches;
-    final launch = model[index];
+    final model = context.read<DataProvider>();
+    final launch = model.launches[index];
 
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      width: double.infinity,
-      height: 96,
-      decoration: BoxDecoration(
-        color: Palette.missionBackgroundColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16, top: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    getFormattedDate(launch.launchDateLocal),
-                    style: GoogleFonts.inter(
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Palette.accentColor,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    getFormattedTime(launch.launchDateLocal),
-                    style: GoogleFonts.inter(
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        color: Palette.captionColor,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 13),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    launch.missionName,
-                    style: GoogleFonts.inter(
-                      textStyle: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Palette.titleColor,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      launch.launchSite.siteNameLong,
+    return GestureDetector(
+      onTap: () {
+        model.openRocketLaunchInBrowser(launch.links.wikipedia.toString());
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        width: double.infinity,
+        height: 96,
+        decoration: BoxDecoration(
+          color: Palette.missionBackgroundColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, top: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      getFormattedDate(launch.launchDateLocal),
                       style: GoogleFonts.inter(
                         textStyle: const TextStyle(
                           fontSize: 16,
-                          color: Palette.fontColor,
+                          fontWeight: FontWeight.w500,
+                          color: Palette.accentColor,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    Text(
+                      getFormattedTime(launch.launchDateLocal),
+                      style: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          color: Palette.captionColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 4,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 13),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      launch.missionName,
+                      style: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: Palette.titleColor,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        launch.launchSite.siteNameLong,
+                        style: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            color: Palette.fontColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
